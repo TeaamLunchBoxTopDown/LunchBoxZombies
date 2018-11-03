@@ -24,6 +24,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void Fire();
+
+	void SemiFire();
+
+	void SetCanFire();
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
 	float BaseDamage;
 
@@ -39,12 +45,36 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
 	bool bIsFullAuto;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
+	int32 DefaultMagSize;
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Effects | Sound")
+	USoundBase* FiringSound;
+
+
+	float TimeBetweenShots;
+
+	FTimerHandle TimerHandle_TimeBetween;
+
+	FTimerHandle TimerHandle_SemiTimeBetween;
+
+	float LastTimeFired;
+
+	bool bCanFire;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon Events")
-	void Fire();
+	void StartFire();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon Events")
+	void StopFire();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon Events")
+	void Reload();
 	
 	
 };
