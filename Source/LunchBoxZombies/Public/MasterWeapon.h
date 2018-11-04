@@ -48,6 +48,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
 	int32 DefaultMagSize;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	int32 AmmoInMag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Effects | Sound")
 	USoundBase* FiringSound;

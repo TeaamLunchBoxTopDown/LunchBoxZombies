@@ -23,10 +23,11 @@ AMasterWeapon::AMasterWeapon()
 	NrOfBulletPerShot = 1;
 	Range = 1000;
 	bIsFullAuto = true;
+	DefaultMagSize = 30;
+	AmmoInMag = DefaultMagSize;
 
 	bCanFire = true;
 
-	TimeBetweenShots = 60 / FireRate;
 }
 
 // Called when the game starts or when spawned
@@ -34,17 +35,32 @@ void AMasterWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	TimeBetweenShots = 60 / FireRate;
 }
 
 
 void AMasterWeapon::Fire()
 {
+	if (AmmoInMag>0)
+	{
+		AmmoInMag--;
+	}
+	else
+	{
+		return;
+	}
+
+
 	if (FiringSound)
 	{
 		UGameplayStatics::PlaySound2D(GetWorld(), FiringSound);
 	}
 
 	LastTimeFired = GetWorld()->TimeSeconds;
+
+
+
+
 }
 
 void AMasterWeapon::StartFire()
@@ -56,7 +72,6 @@ void AMasterWeapon::StartFire()
 	else
 	{
 		float FirstDelay = FMath::Max(LastTimeFired + TimeBetweenShots - GetWorld()->TimeSeconds, 0.0f);
-
 		GetWorldTimerManager().SetTimer(TimerHandle_TimeBetween, this, &AMasterWeapon::Fire, TimeBetweenShots, true, FirstDelay);
 	}
 }
