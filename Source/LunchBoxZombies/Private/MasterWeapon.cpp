@@ -50,13 +50,24 @@ void AMasterWeapon::Fire()
 		return;
 	}
 
-
-	if (FiringSound)
+	if (WeaponMesh&&SocketName!="None")
 	{
-		UGameplayStatics::PlaySound2D(GetWorld(), FiringSound);
-	}
+		if (FiringSound)
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), FiringSound);
+		}
 
-	LastTimeFired = GetWorld()->TimeSeconds;
+		FVector StartLocation = WeaponMesh->GetSocketLocation(SocketName);
+		FRotator StartRotation = WeaponMesh->GetSocketRotation(SocketName);
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+
+		GetWorld()->SpawnActor<AActor>(ProjectileClass, StartLocation, StartRotation, SpawnParams);
+
+		LastTimeFired = GetWorld()->TimeSeconds;
+
+	}
 
 
 
@@ -110,6 +121,9 @@ void AMasterWeapon::Tick(float DeltaTime)
 
 void AMasterWeapon::Reload()
 {
-	//Reload
+	if (AmmoInMag < DefaultMagSize) 
+	{
+		AmmoInMag = DefaultMagSize;
+	}
 }
 

@@ -45,6 +45,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
 	bool bIsFullAuto;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Effects | Socket")
+	FName SocketName;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Effects | Socket")
+	TSubclassOf<AActor> ProjectileClass;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
 	int32 DefaultMagSize;
 
@@ -78,5 +84,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon Events")
 	void Reload();
 	
-	
+
 };
